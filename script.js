@@ -5,7 +5,7 @@ class MindMap {
         // Ensure root node is never collapsed on load
         const rootNode = this.nodes.find(n => n.id === 0);
         if (rootNode) rootNode.collapsed = false;
-        this.saveToStorage(); // Save the fix immediately
+        this.saveToStorage();
         this.initEventListeners();
         this.render();
     }
@@ -83,6 +83,12 @@ class MindMap {
         return !parent.collapsed && this.isNodeVisible(parent);
     }
 
+    resetMindMap() {
+        this.nodes = [{ id: 0, text: "Root Node", x: 50, y: 50, parentId: null, children: [], collapsed: false }];
+        this.saveToStorage();
+        this.render();
+    }
+
     render() {
         const container = document.getElementById('mindmap-container');
         container.innerHTML = '';
@@ -126,8 +132,16 @@ class MindMap {
     initEventListeners() {
         const container = document.getElementById('mindmap-container');
         const contextMenu = document.getElementById('context-menu');
+        const newBtn = document.getElementById('new-btn');
         let draggedNode = null;
         let offsetX, offsetY;
+
+        // New button to reset everything
+        newBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to start a new mind map? All current data will be lost.")) {
+                this.resetMindMap();
+            }
+        });
 
         // Single click to collapse/expand
         container.addEventListener('click', (e) => {
@@ -230,17 +244,8 @@ class MindMap {
             touchNode = null;
         });
     }
-
-    // Optional: Method to reset everything if needed
-    resetMindMap() {
-        this.nodes = [{ id: 0, text: "Root Node", x: 50, y: 50, parentId: null, children: [], collapsed: false }];
-        this.saveToStorage();
-        this.render();
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const mindMap = new MindMap();
-    // Uncomment the next line if you want to manually reset everything
-    // mindMap.resetMindMap();
+    new MindMap();
 });

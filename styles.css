@@ -54,3 +54,17 @@ body {
 .menu-item:hover {
     background-color: #f0f0f0;
 }
+
+#new-btn {
+    padding: 5px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#new-btn:hover {
+    background-color: #45a049;
+}
