@@ -2,11 +2,13 @@ body {
     margin: 0;
     padding: 20px;
     font-family: Arial, sans-serif;
+    overflow: auto;
 }
 
 #mindmap-container {
     position: relative;
     min-height: 100vh;
+    width: 100%;
 }
 
 .node {
@@ -15,15 +17,12 @@ body {
     background-color: #f0f0f0;
     border: 2px solid #333;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: move;
     user-select: none;
+    z-index: 1;
 }
 
-.node.expanded > .content {
-    display: block;
-}
-
-.node .content {
+.node.collapsed .children {
     display: none;
 }
 
@@ -35,4 +34,23 @@ body {
     position: absolute;
     background-color: #333;
     transform-origin: 0 0;
+    z-index: 0;
+}
+
+.context-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 10;
+}
+
+.menu-item {
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: #f0f0f0;
 }
