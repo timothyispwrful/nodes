@@ -57,6 +57,7 @@ class MindMap {
     }
 
     toggleCollapse(id) {
+        if (id === 0) return; // Prevent collapsing the root node
         const node = this.nodes.find(n => n.id === id);
         node.collapsed = !node.collapsed;
         this.saveToStorage();
