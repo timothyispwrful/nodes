@@ -2,6 +2,10 @@ class MindMap {
     constructor() {
         this.nodes = [{ id: 0, text: "Root Node", x: 50, y: 50, parentId: null, children: [], collapsed: false }];
         this.loadFromStorage();
+        // Ensure root node is never collapsed on load
+        const rootNode = this.nodes.find(n => n.id === 0);
+        if (rootNode) rootNode.collapsed = false;
+        this.saveToStorage(); // Save the fix immediately
         this.initEventListeners();
         this.render();
     }
@@ -226,8 +230,17 @@ class MindMap {
             touchNode = null;
         });
     }
+
+    // Optional: Method to reset everything if needed
+    resetMindMap() {
+        this.nodes = [{ id: 0, text: "Root Node", x: 50, y: 50, parentId: null, children: [], collapsed: false }];
+        this.saveToStorage();
+        this.render();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new MindMap();
+    const mindMap = new MindMap();
+    // Uncomment the next line if you want to manually reset everything
+    // mindMap.resetMindMap();
 });
