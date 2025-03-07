@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+#mindmap-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.node {
+    position: absolute;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.node.expanded > .content {
+    display: block;
+}
+
+.node .content {
+    display: none;
+}
+
+.node:hover {
+    background-color: #e0e0e0;
+}
+
+.line {
+    position: absolute;
+    background-color: #333;
+    transform-origin: 0 0;
+}
