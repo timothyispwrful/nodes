@@ -71,12 +71,22 @@ class MindMap {
         this.render();
     }
 
+    // Helper to check if a node should be visible
+    isNodeVisible(node) {
+        if (node.parentId === null) return true; // Root is always visible
+        const parent = this.nodes.find(n => n.id === node.parentId);
+        return !parent.collapsed && this.isNodeVisible(parent);
+    }
+
     render() {
         const container = document.getElementById('mindmap-container');
         container.innerHTML = '';
 
+        // Filter visible nodes
+        const visibleNodes = this.nodes.filter(node => this.isNodeVisible(node));
+
         // Render nodes
-        this.nodes.forEach(node => {
+        visibleNodes.forEach(node => {
             const div = document.createElement('div');
             div.className = `node ${node.collapsed ? 'collapsed' : ''}`;
             div.dataset.id = node.id;
@@ -86,11 +96,11 @@ class MindMap {
             container.appendChild(div);
         });
 
-        // Render lines (only to visible children)
-        this.nodes.forEach(node => {
+        // Render lines (only between visible nodes)
+        visibleNodes.forEach(node => {
             if (node.parentId !== null) {
                 const parent = this.nodes.find(n => n.id === node.parentId);
-                if (!parent.collapsed) {
+                if (visibleNodes.includes(parent)) { // Only draw if parent is visible
                     const line = document.createElement('div');
                     line.className = 'line';
                     const dx = node.x - parent.x;
